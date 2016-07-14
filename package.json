@@ -1,0 +1,27 @@
+{
+  "name": "10.1",
+  "version": "1.0.0",
+  "description": "project",
+  "main": "gruntfilr.js",
+  "dependencies": {
+    "grunt-cli": "^1.2.0"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-imagemin": "^1.0.1",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-sass": "^1.2.0"
+  },
+  "scripts": {
+    "test": "grunt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "none"
+  },
+  "keywords": [
+    "grunt"
+  ],
+  "author": "Mike",
+  "license": "ISC"
+}
