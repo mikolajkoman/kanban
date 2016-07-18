@@ -18,12 +18,12 @@ $(function(){
 		function createColumn() {
 			var $column = $('<div>').addClass('column');
 			var $columnTitle = $('<h2>').addClass('column-title').text(self.name);
-			var $columnCardList = $('<ul>').addClass('column-card-list');
+			var $columnCardList = $('<ul>').addClass('columnt-card-list');
 			var $columnDelete = $('<button>').addClass('btn-delete').text('x');
 			var $columnAddCard = $('<button>').addClass('add-card').text('Dodaj kartę');
 			
 			$columnDelete.click(function() {
-				self.removeColumn();
+				self.deleteColumn();
 			});
 			$columnAddCard.click(function() {
 				self.addCard(new Card(prompt("Wpisz nazwę karty")));
@@ -35,17 +35,16 @@ $(function(){
 				.append($columnCardList);
 				return $column;
 		}
-		
+		Column.prototype = {
+			addCard: function(card) {
+				this.$element.children('ul').append(card.$element);
+			},
+			removeColumn: function() {
+				this.$element.remove();
+			}
+		};
 	}
-	Column.prototype = {
-	addCard: function(card) {
-		this.$element.children('ul').append(card.$element);
-	},
-	removeColumn: function() {
-		this.$element.remove();
-		}
-	};
-	function Card(description) {
+	function Card() {
 		var self = this;
 		this.id = randomString();
 		this.description = description;
@@ -56,7 +55,7 @@ $(function(){
 			var $cardDescription = $('<p>').addClass('card-description').text(self.description);
 			var $cardDelete = $('<button>').addClass('btn-delete').text('x');
 			$cardDelete.click(function(){
-				self.removeCard();
+        		self.removeCard();
 			});
 			$card.append($cardDelete)
 				.append($cardDescription);
@@ -67,17 +66,21 @@ $(function(){
 				this.$element.remove();
 			}
 		}
-		
 	}
-
 	var board = {
-				name: 'Tablica Kanban',
-				addColumn: function(column) {
-					this.element.append(column.$element);
-				initSortable();
-				},
-				element: $('#board .column-container')
-			};
+		name: 'Tablica Kanban',
+		addColumn: function(column) {
+      		this.$element.append(column.$element);
+      		initSortable();
+    	},
+    	element: $('#board .column-container')
+	};
+	function initSortable() {
+    	$('.column-list').sortable({
+			connectWith: '.card-list',
+			placeholder: 'card-placeholder'
+		}).disableSelection();
+	}
 	$('.create-column')
 	.click(function(){
 		var name = prompt('Wpisz nazwę kolumny');
@@ -85,15 +88,6 @@ $(function(){
 		board.addColumn(column);
 	});
 
-	function initSortable() {
-    	$('.column-list').sortable({
-			connectWith: '.card-list',
-			placeholder: 'card-placeholder'
-		}).disableSelection();
-	}
-	
-
-	
 	// TWORZENIE KOLUMN
 	var todoColumn = new Column('Do zrobienia');
 	var doingColumn = new Column('W trakcie');
