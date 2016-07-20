@@ -45,29 +45,47 @@ $(function(){
 		this.$element.remove();
 		}
 	};
+
 	function Card(description) {
 		var self = this;
 		this.id = randomString();
 		this.description = description;
-		this.$element = createCard(); //
+		this.$element = createCard();
 
 		function createCard() {
 			var $card = $('<li>').addClass('card');
+			var $btn_group = $('<button>').addClass('btn-group').text(' ').css({'background-color': 'red'});
 			var $cardDescription = $('<p>').addClass('card-description').text(self.description);
 			var $cardDelete = $('<button>').addClass('btn-delete').text('x');
 			$cardDelete.click(function(){
 				self.removeCard();
 			});
-			$card.append($cardDelete)
+
+			barcolor = ['red', 'blue', 'green', 'aqua', 'yellow', 'pink', 'purple', 'orange', 'black', 'white' ];
+			barcolor_nr = 1;
+			$($btn_group).click(function(){
+			$(this).css({'background-color':  barcolor[barcolor_nr++]});
+				if (barcolor_nr > barcolor.length){
+					barcolor_nr = 0;
+
+				}
+			});
+
+			$card
+				.append($cardDelete)
+				.append($btn_group)
 				.append($cardDescription);
 				return $card;
-		}
-		Card.prototype = {
-			removeCard: function() {
-				this.$element.remove();
-			}
+
+			
 		}
 		
+		
+	}
+	Card.prototype = {
+		removeCard: function() {
+			this.$element.remove();
+		}
 	}
 
 	var board = {
@@ -86,8 +104,8 @@ $(function(){
 	});
 
 	function initSortable() {
-    	$('.column-list').sortable({
-			connectWith: '.card-list',
+    	$('.column-card-list').sortable({
+			connectWith: '.column-card-list',
 			placeholder: 'card-placeholder'
 		}).disableSelection();
 	}

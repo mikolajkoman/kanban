@@ -1,11 +1,14 @@
 
-@import url(https://fonts.googleapis.com/css?family=Expletus+Sans)
-$bg-color:  #2BEA2B
+@import url(https://fonts.googleapis.com/css?family=Oswald:300);
+$bg-color:  #2980b9
 $text-color:  #000
-$text-font: 'Expletus Sans', sans-serif
+$text-font: 'Oswald', sans-serif
 
 body
 	background-color: $bg-color
+	background-image: url( "https://static.pexels.com/photos/1486/wood-pattern-ground-parquet-floor-medium.jpg" )
+	background-size: cover
+	width: 100%
 	color: $text-color
 	font-family: $text-font
 	float: none
@@ -13,32 +16,53 @@ body
 	margin: 0 auto
 
 button
+	height: 20px
 	margin: 5px
-	paddnig: 1px
 	border-radius: 15px
-	background-color: #419641
+	background-color: rgba(255, 248, 92, 0.3)
 	border-width: 0px
+	padding: 1px 5px
+    line-height: 1.5
+	cursor: pointer
 
 .column
 	display: inline
 	width: 360px
-	margin-right: 10px
-	border-width: 2px
+	margin: 5px
+	padding: 5px
+	border-width: 3px
 	border-radius: 15px
 	border-style: solid
-	border-color: green
+	border-color: rgba(0, 0, 0, 0.3)
+	background-color: rgba(255, 248, 255, 0.3)
 	float: left
-
-ul
-	list-style-type: none
-	li
-		background-color: rgba(255, 255, 255, 0.3)
-		width: 300px
+	button
+		float: right
+	.btn-delete
+		font-weight: bold
+		background-color: rgba(255, 0, 0, 0.4)
+	.btn-group
+		float: left
+		margin-left: 10px
+		border-radius: 15px
+		width: 10px
+		height: 30px
+	ul
+		
 		min-height: 50px
-		button
-			float: right
+		list-style-type: none
+		li
+			background-color: rgba(0, 0, 0, 0.3)
+			border-radius: 15px
+			width: 300px
+			min-height: 50px
+			p
+				margin-left: 10px
+			button
+				float: right
+	h2
+		display: inline
+h1
+	text-align: center
 
-
-h2
-	display: inline
 
