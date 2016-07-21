@@ -1,87 +1,96 @@
 $(function(){
+
 	function randomString() {
-    	var chars = '0123456789abcdefghiklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXTZ';
-    	var str = '';
-    	var i = 0;
+    	var chars = '0123456789abcdefghiklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXTZ',
+    	    str = '',
+    	    i = 0;
+
     	for (i = 0; i < 10; i++) {
         	str += chars[Math.floor(Math.random() * chars.length)];
     	}
+
     	return str;
 	}
-	function Column(name) {
-    	var self = this;
 
-    	this.id = randomString();
-    	this.name = name;
-    	this.$element = createColumn();
+	function Column(name) {
+  	var self = this;
+
+  	this.id = randomString();
+  	this.name = name;
+  	this.$element = createColumn();
 
 		function createColumn() {
-			var $column = $('<div>').addClass('column');
-			var $columnTitle = $('<h2>').addClass('column-title').text(self.name);
-			var $columnCardList = $('<ul>').addClass('column-card-list');
-			var $columnDelete = $('<button>').addClass('btn-delete').text('x');
-			var $columnAddCard = $('<button>').addClass('add-card').text('Dodaj kartę');
-			
+			var $column = $('<div>').addClass('column'),
+			    $columnTitle = $('<h2>').addClass('column-title').text(self.name),
+			    $columnCardList = $('<ul>').addClass('column-card-list'),
+			    $columnDelete = $('<button>').addClass('btn-delete').text('x'),
+			    $columnAddCard = $('<button>').addClass('add-card').text('Dodaj kartę');
+
 			$columnDelete.click(function() {
 				self.removeColumn();
 			});
+
 			$columnAddCard.click(function() {
 				self.addCard(new Card(prompt("Wpisz nazwę karty")));
 			});
 
-			$column.append($columnTitle)
+			$column
+				.append($columnTitle)
 				.append($columnDelete)
 				.append($columnAddCard)
 				.append($columnCardList);
-				return $column;
+
+			return $column;
 		}
-		
+
 	}
+
 	Column.prototype = {
-	addCard: function(card) {
-		this.$element.children('ul').append(card.$element);
-	},
-	removeColumn: function() {
-		this.$element.remove();
+		addCard: function(card) {
+			this.$element.children('ul').append(card.$element);
+		},
+		removeColumn: function() {
+			this.$element.remove();
 		}
 	};
 
 	function Card(description) {
 		var self = this;
+
 		this.id = randomString();
 		this.description = description;
 		this.$element = createCard();
+		this.barcolor = ['red', 'blue', 'green', 'aqua', 'yellow', 'pink', 'purple', 'orange', 'black', 'white' ];
+		this.barcolor_nr = 1;
 
 		function createCard() {
 			var $card = $('<li>').addClass('card');
 			var $btn_group = $('<button>').addClass('btn-group').text(' ').css({'background-color': 'red'});
 			var $cardDescription = $('<p>').addClass('card-description').text(self.description);
 			var $cardDelete = $('<button>').addClass('btn-delete').text('x');
-			$cardDelete.click(function(){
+
+			$cardDelete.click(function() {
 				self.removeCard();
 			});
 
-			barcolor = ['red', 'blue', 'green', 'aqua', 'yellow', 'pink', 'purple', 'orange', 'black', 'white' ];
-			barcolor_nr = 1;
-			$($btn_group).click(function(){
-			$(this).css({'background-color':  barcolor[barcolor_nr++]});
-				if (barcolor_nr > barcolor.length){
-					barcolor_nr = 0;
+			$($btn_group).click(function() {
+				$(this).css({'background-color':  self.barcolor[self.barcolor_nr++]});
 
+				if (self.barcolor_nr > self.barcolor.length){
+					self.barcolor_nr = 0;
 				}
+
 			});
 
 			$card
 				.append($cardDelete)
 				.append($btn_group)
 				.append($cardDescription);
-				return $card;
 
-			
+			return $card;
 		}
-		
-		
 	}
+
 	Card.prototype = {
 		removeCard: function() {
 			this.$element.remove();
@@ -89,29 +98,30 @@ $(function(){
 	}
 
 	var board = {
-				name: 'Tablica Kanban',
-				addColumn: function(column) {
-					this.element.append(column.$element);
-				initSortable();
-				},
-				element: $('#board .column-container')
-			};
+		name: 'Tablica Kanban',
+		addColumn: function(column) {
+			this.element.append(column.$element);
+			initSortable();
+		},
+		element: $('#board .column-container')
+	};
+
 	$('.create-column')
-	.click(function(){
-		var name = prompt('Wpisz nazwę kolumny');
-		var column = new Column(name);
-		board.addColumn(column);
-	});
+		.click(function(){
+			var name = prompt('Wpisz nazwę kolumny');
+			var column = new Column(name);
+			board.addColumn(column);
+		});
 
 	function initSortable() {
-    	$('.column-card-list').sortable({
-			connectWith: '.column-card-list',
-			placeholder: 'card-placeholder'
-		}).disableSelection();
+  	$('.column-card-list')
+			.sortable({
+				connectWith: '.column-card-list',
+				placeholder: 'card-placeholder'
+			})
+			.disableSelection();
 	}
-	
 
-	
 	// TWORZENIE KOLUMN
 	var todoColumn = new Column('Do zrobienia');
 	var doingColumn = new Column('W trakcie');
@@ -131,6 +141,3 @@ $(function(){
 	doingColumn.addCard(card2);
 
 });
-
-
-
