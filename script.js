@@ -21,7 +21,7 @@ $(function(){
 			var $columnCardList = $('<ul>').addClass('column-card-list');
 			var $columnDelete = $('<button>').addClass('btn-delete').text('x');
 			var $columnAddCard = $('<button>').addClass('add-card').text('Dodaj kartę');
-			
+
 			$columnDelete.click(function() {
 				self.removeColumn();
 			});
@@ -35,7 +35,7 @@ $(function(){
 				.append($columnCardList);
 				return $column;
 		}
-		
+
 	}
 	Column.prototype = {
 	addCard: function(card) {
@@ -51,6 +51,8 @@ $(function(){
 		this.id = randomString();
 		this.description = description;
 		this.$element = createCard();
+		this.barcolor = ['red', 'blue', 'green', 'aqua', 'yellow', 'pink', 'purple', 'orange', 'black', 'white' ];
+		this.barcolor_nr = 1;
 
 		function createCard() {
 			var $card = $('<li>').addClass('card');
@@ -61,12 +63,10 @@ $(function(){
 				self.removeCard();
 			});
 
-			barcolor = ['red', 'blue', 'green', 'aqua', 'yellow', 'pink', 'purple', 'orange', 'black', 'white' ];
-			barcolor_nr = 1;
 			$($btn_group).click(function(){
-			$(this).css({'background-color':  barcolor[barcolor_nr++]});
-				if (barcolor_nr > barcolor.length){
-					barcolor_nr = 0;
+			$(this).css({'background-color':  self.barcolor[self.barcolor_nr++]});
+				if (self.barcolor_nr > self.barcolor.length){
+					self.barcolor_nr = 0;
 
 				}
 			});
@@ -77,10 +77,10 @@ $(function(){
 				.append($cardDescription);
 				return $card;
 
-			
+
 		}
-		
-		
+
+
 	}
 	Card.prototype = {
 		removeCard: function() {
@@ -109,9 +109,9 @@ $(function(){
 			placeholder: 'card-placeholder'
 		}).disableSelection();
 	}
-	
 
-	
+
+
 	// TWORZENIE KOLUMN
 	var todoColumn = new Column('Do zrobienia');
 	var doingColumn = new Column('W trakcie');
@@ -131,6 +131,3 @@ $(function(){
 	doingColumn.addCard(card2);
 
 });
-
-
-
